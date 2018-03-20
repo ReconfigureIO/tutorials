@@ -18,8 +18,8 @@ func Top(
     readReq chan<- smi.Flit64,
     readResp <-chan smi.Flit64,
 
-	  writeReq chan<- smi.Flit64,
-	  writeResp <-chan smi.Flit64) {
+    writeReq chan<- smi.Flit64,
+    writeResp <-chan smi.Flit64) {
 
     // Do whatever needs doing with the data from the host
 
