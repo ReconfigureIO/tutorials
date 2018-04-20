@@ -9,6 +9,11 @@ import (
 	axiprotocol "github.com/ReconfigureIO/sdaccel/axi/protocol"
 )
 
+// function to multiply two uint32s
+func Multiply(a uint32) uint32 {
+	return a * 2
+}
+
 func Top(
 	// Pass two operands to the FPGA, the integer to be multiplied and a pointer to the
 	// space in shared memory where it should store the result.
@@ -27,8 +32,8 @@ func Top(
 	// Since we're not reading anything from memory, disable those reads
 	go axiprotocol.ReadDisable(memReadAddr, memReadData)
 
-	// Multiply incoming data by 2
-	val := a * 2
+	// Multiply incoming data by 2 using Multiply function
+	val := Multiply(a)
 
 	// Write the result to the location in shared memory as requested by the host
 	aximemory.WriteUInt32(
