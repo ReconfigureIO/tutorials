@@ -9,6 +9,11 @@ import (
 	axiprotocol "github.com/ReconfigureIO/sdaccel/axi/protocol"
 )
 
+// function to multiply two uint32s
+func Multiply(a uint32) uint32 {
+	return a * 2
+}
+
 func Top(
 	// Pass a pointer to shared memory to tell the FPGA where to find the data to be operated on,
 	// and a pointer to the space in shared memory where the result should be stored. Also tell the FPGA
@@ -37,7 +42,9 @@ func Top(
 	go func() {
 		// no need to stop here, which will save us some clocks checking
 		for {
-			transformedChan <- (<-inputChan) * 2
+			sample := <-inputChan
+			val := Multiply(sample)
+			transformedChan <- val
 		}
 	}()
 
