@@ -1,8 +1,8 @@
-hash: a7e7024cd072e0899319c908b8663bd5bb2b6087bdc97060f4c62d02debb47ff
-updated: 2018-02-09T14:17:13.95095874Z
+hash: 08aca10f1b8869a763f15daccc8a89009d4fe71939ab2e2d904b7be29b681ec0
+updated: 2018-04-26T12:39:50.268434606+01:00
 imports:
 - name: github.com/ReconfigureIO/sdaccel
-  version: e93e5713d49cc1354dcd1d35cfaef85ba151e0a3
+  version: 12b70f9fbdfe231c429c948a9e0478309154e3f6
   subpackages:
   - axi/memory
   - axi/protocol
