@@ -6,7 +6,7 @@ import (
 )
 
 func TestMultiply(t *testing.T) {
-	// Check that our Add function adds numbers correctly
+	// Check that our Multiply function multiplies its input by 2
 	f := func(x uint32) bool {
 		result := Multiply(x)
 		return (result == (x * 2))
