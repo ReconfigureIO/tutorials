@@ -9,11 +9,11 @@ import (
 )
 
 func main() {
-  result := testing.Benchmark(BenchmarkFoo)
+  result := testing.Benchmark(BenchmarkMultiply)
   fmt.Println(result)
 }
 
-func BenchmarkFoo(b *testing.B) {
+func BenchmarkMultiply(b *testing.B) {
   state := NewState(100)
   b.Run("100_inputs", state.Run)
 
