@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"encoding/binary"
 	"github.com/ReconfigureIO/sdaccel/xcl"
 )
@@ -55,8 +56,8 @@ func main() {
 	// Read the results into our output array and then print them out
 	binary.Read(outputBuff.Reader(), binary.LittleEndian, &output)
 
-	for _, val := range output {
-		print(val)
-	}
+	log.Printf("Input: %v ", input)
+	log.Printf("Output: %v ", output)
+
 
 }
