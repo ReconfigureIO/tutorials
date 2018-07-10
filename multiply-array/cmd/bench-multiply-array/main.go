@@ -15,9 +15,9 @@ func main() {
 
 func BenchmarkMultiply(b *testing.B) {
   state := NewState(100)
-  b.Run("100_inputs", state.Run)
-
   defer state.Release()
+
+  b.Run("100_inputs", state.Run)
 }
 
 type State struct {
@@ -31,25 +31,25 @@ type State struct {
   output      []uint32
 }
 
-func NewState(nInputs uint32) *State {
-  w := xcl.NewWorld()
-
-  p := w.Import("kernel_test")
+func NewState(nInputs int) *State {
+  w := xcl.NewWorld() // variable for new World
+  p := w.Import("kernel_test") // variable to import our kernel
+  size := uint(nInputs) * 4 // number of bytes needed to hold the input and output data
 
   s := &State{
     world:      w,
     program:    p,
     krnl:       p.GetKernel("reconfigure_io_sdaccel_builder_stub_0_1"),
-    buff:       w.Malloc(xcl.ReadOnly, uint(binary.Size(nInputs))), // constructed as a function of nInputs
-    outputBuff: w.Malloc(xcl.ReadWrite, uint(binary.Size(nInputs))), // output will be the same size as input
+    buff:       w.Malloc(xcl.ReadOnly, size), // constructed as a function of nInputs
+    outputBuff: w.Malloc(xcl.ReadWrite, size), // output will be the same size as input
     input:      make([]uint32, nInputs), //variable to store input data
     output:     make([]uint32, nInputs), // variable to store result data
   }
 
   // Seed the input array with incrementing values
-  max := int(nInputs)
+  //max := int(nInputs)
 
-  for i := 0; i < max; i++ {
+  for i, _ := range s.input {
 		s.input[i] = uint32(i)
 	}
 
@@ -79,7 +79,7 @@ func (s *State) feedFPGA() {
   // write input to memory
   binary.Write(s.buff.Writer(), binary.LittleEndian, &s.input)
   // Zero out the space for the result
-	binary.Write(s.outputBuff.Writer(), binary.LittleEndian, &s.output)
+	//binary.Write(s.outputBuff.Writer(), binary.LittleEndian, &s.output)
 
   // Send the location of the input array as the first argument
   s.krnl.SetMemoryArg(0, s.buff)
