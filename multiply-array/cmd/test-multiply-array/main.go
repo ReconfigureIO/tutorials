@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/binary"
+	"log"
+
 	"github.com/ReconfigureIO/sdaccel/xcl"
 )
 
@@ -54,6 +56,10 @@ func main() {
 
 	// Read the results into our output array and then print them out
 	binary.Read(outputBuff.Reader(), binary.LittleEndian, &output)
+
+	log.Println()
+	log.Println()
+	log.Printf("The result of the multiplication from the FPGA is:")
 
 	for _, val := range output {
 		print(val)
