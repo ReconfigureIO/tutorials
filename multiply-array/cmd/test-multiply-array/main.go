@@ -59,10 +59,9 @@ func main() {
 
 	log.Println()
 	log.Println()
-	log.Printf("The result of the multiplication from the FPGA is:")
-
-	for _, val := range output {
-		print(val)
-	}
-
+	log.Printf("This was our input to the FPGA:")
+	log.Printf("Input: %v ", input)
+	log.Println()
+	log.Printf("And this is our result from the FPGA:")
+	log.Printf("Output: %v ", output)
 }

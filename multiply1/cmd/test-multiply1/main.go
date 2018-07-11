@@ -2,7 +2,8 @@ package main
 
 import (
 	"encoding/binary"
-	"fmt"
+	"log"
+
 	"github.com/ReconfigureIO/sdaccel/xcl"
 )
 
@@ -37,7 +38,10 @@ func main() {
 	var output uint32
 	binary.Read(buff.Reader(), binary.LittleEndian, &output)
 
-	// Print the result
-	fmt.Printf("%d\n", output)
-
+	log.Println()
+	log.Printf("We sent a single integer '1' to the FPGA")
+	log.Println()
+	log.Printf("This is result of the single integer multiplication from the FPGA:")
+	log.Printf("Output: %v ", output)
+	log.Println()
 }
