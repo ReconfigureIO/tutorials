@@ -10,14 +10,17 @@ import (
 )
 
 func main() {
-	state := NewState(100)
+	state := NewState(1000)
 	defer state.Release()
 
-	println()
-	println()
-	log.Printf("Benchmark:")
+	log.Println()
+	log.Println()
+	log.Printf("Benchmark round:")
 
 	result := testing.Benchmark(state.Run)
+	log.Println()
+	log.Println()
+	log.Printf("Benchmark:")
 	fmt.Println(result)
 }
 
@@ -64,8 +67,8 @@ func NewState(nInputs int) *State {
 	// To avoid measuring warmup cost of the first few calls (especially in sim)
 	const warmup = 2
 	for i := 0; i < warmup; i++ {
-		println()
-		println()
+		log.Println()
+		log.Println()
 		log.Printf("Warm up round:")
 		s.feedFPGA()
 	}
