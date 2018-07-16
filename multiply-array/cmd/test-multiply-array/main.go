@@ -1,8 +1,9 @@
 package main
 
 import (
-	"log"
 	"encoding/binary"
+	"log"
+
 	"github.com/ReconfigureIO/sdaccel/xcl"
 )
 
@@ -58,6 +59,5 @@ func main() {
 
 	log.Printf("Input: %v ", input)
 	log.Printf("Output: %v ", output)
-
 
 }
