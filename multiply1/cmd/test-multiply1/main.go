@@ -40,8 +40,7 @@ func main() {
 
 	log.Println()
 	log.Printf("We sent a single integer '1' to the FPGA")
-	log.Println()
-	log.Printf("This is result of the single integer multiplication from the FPGA:")
+	log.Printf("We programmed the FPGA to multiply its input by 2, and this is the result we got:")
 	log.Printf("Output: %v ", output)
 	log.Println()
 }
