@@ -59,9 +59,9 @@ func main() {
 
 	log.Println()
 	log.Println()
-	log.Printf("This is our input to the FPGA:")
-	log.Printf("Input: %v ", input)
-	log.Printf("We programmed the FPGA to multiply each integer in its input by '2' and pass back the results as a new array. This is the result we got:")
-	log.Printf("Output: %v ", output)
+	log.Printf("This is our input to the FPGA: \n")
+	log.Printf("Input: %v \n", input)
+	log.Printf("We programmed the FPGA to multiply each integer in its input by '2' and pass back the results as a new array. This is the result we got: \n")
+	log.Printf("Output: %v \n", output)
 	log.Println()
 }
