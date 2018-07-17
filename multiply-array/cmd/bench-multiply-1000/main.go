@@ -10,12 +10,12 @@ import (
 )
 
 func main() {
-	state := NewState(100)
+	state := NewState(1000)
 	defer state.Release()
 
 	log.Println()
 	log.Println()
-	log.Printf("Time taken to collect and process an array of 100 integers:")
+	log.Printf("Time taken to collect and process an array of 1000 integers:")
 	log.Println()
 
 	result := testing.Benchmark(state.Run)
