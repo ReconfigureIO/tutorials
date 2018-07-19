@@ -4,18 +4,29 @@ import (
 	"encoding/binary"
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 	"testing"
 
 	"github.com/ReconfigureIO/sdaccel/xcl"
 )
 
 func main() {
-	state := NewState(1000)
+	input := os.Args[1]
+
+	nInputs, err := strconv.Atoi(input)
+	if err != nil {
+		// handle error
+		fmt.Println(err)
+		os.Exit(2)
+	}
+
+	state := NewState(nInputs)
 	defer state.Release()
 
 	log.Println()
 	log.Println()
-	log.Printf("Time taken to collect and process an array of 1000 integers:")
+	log.Printf("Time taken to collect and process an array of %v integers: \n", nInputs)
 	log.Println()
 
 	result := testing.Benchmark(state.Run)
