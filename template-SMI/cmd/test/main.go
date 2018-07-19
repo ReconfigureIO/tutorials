@@ -43,6 +43,4 @@ func main() {
 
     // Display/use the results returned from the FPGA as required!
 
-    ...
-
 }
