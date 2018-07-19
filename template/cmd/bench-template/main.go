@@ -4,24 +4,37 @@ import (
 	"encoding/binary"
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 	"testing"
 
 	"github.com/ReconfigureIO/sdaccel/xcl"
 )
 
 func main() {
-	state := NewState(10000)
+	// take the first command line argument and use as the data size for the benchmark
+	input := os.Args[1]
+
+	// convert the string argument to an int
+	nInputs, err := strconv.Atoi(input)
+	if err != nil {
+		// handle error
+		fmt.Println(err)
+		os.Exit(2)
+	}
+
+	// initialise a new state using our specified input size and warm up
+	state := NewState(nInputs)
 	defer state.Release()
 
+	// run the benchmark
 	log.Println()
 	log.Println()
-	log.Printf("Time taken to collect and process an array of 10000 integers:")
+	log.Printf("Time taken to collect and process an array of %v integers: \n", nInputs)
 	log.Println()
 
 	result := testing.Benchmark(state.Run)
 	fmt.Println(result)
-
-	log.Println()
 }
 
 type State struct {
