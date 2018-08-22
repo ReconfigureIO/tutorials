@@ -3,10 +3,7 @@ package main
 import (
 	// Import the entire framework for interracting with SDAccel from Go (including bundled verilog)
 	_ "github.com/ReconfigureIO/sdaccel"
-
-	// Use the new AXI protocol package for interracting with memory
-	aximemory "github.com/ReconfigureIO/sdaccel/axi/memory"
-	axiprotocol "github.com/ReconfigureIO/sdaccel/axi/protocol"
+	"github.com/ReconfigureIO/sdaccel/smi"
 )
 
 // function to multiply two uint32s
@@ -23,18 +20,17 @@ func Top(
 	outputData uintptr,
 	length uint32,
 
-	// Set up channels for interacting with the shared memory
-	memReadAddr chan<- axiprotocol.Addr,
-	memReadData <-chan axiprotocol.ReadData,
+	// Set up ports for interacting with the shared memory
+	readReq chan<- smi.Flit64,
+	readResp <-chan smi.Flit64,
 
-	memWriteAddr chan<- axiprotocol.Addr,
-	memWriteData chan<- axiprotocol.WriteData,
-	memWriteResp <-chan axiprotocol.WriteResp) {
+	writeReq chan<- smi.Flit64,
+	writeResp <-chan smi.Flit64) {
 
 	// Read all the input data into a channel
 	inputChan := make(chan uint32)
-	go aximemory.ReadBurstUInt32(
-		memReadAddr, memReadData, true, inputData, length, inputChan)
+	go smi.ReadBurstUInt32(
+		readReq, readResp, inputData, smi.DefaultOptions, length, inputChan)
 
 	// Create a channel for the result of the calculation
 	transformedChan := make(chan uint32)
@@ -49,6 +45,6 @@ func Top(
 	}()
 
 	// Write transformed results back to memory
-	aximemory.WriteBurstUInt32(
-		memWriteAddr, memWriteData, memWriteResp, true, outputData, length, transformedChan)
+	smi.WriteBurstUInt32(
+		writeReq, writeResp, outputData, smi.DefaultOptions, length, transformedChan)
 }

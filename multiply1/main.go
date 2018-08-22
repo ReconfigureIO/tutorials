@@ -4,9 +4,8 @@ import (
 	// Import the entire framework for interracting with SDAccel from Go (including bundled verilog)
 	_ "github.com/ReconfigureIO/sdaccel"
 
-	/// Use the new AXI protocol package for interracting with memory
-	aximemory "github.com/ReconfigureIO/sdaccel/axi/memory"
-	axiprotocol "github.com/ReconfigureIO/sdaccel/axi/protocol"
+	// Use the SMI protocol package
+	"github.com/ReconfigureIO/sdaccel/smi"
 )
 
 // function to multiply two uint32s
@@ -21,21 +20,14 @@ func Top(
 	a uint32,
 	addr uintptr,
 
-	// Set up channels for interacting with the shared memory
-	memReadAddr chan<- axiprotocol.Addr,
-	memReadData <-chan axiprotocol.ReadData,
-
-	memWriteAddr chan<- axiprotocol.Addr,
-	memWriteData chan<- axiprotocol.WriteData,
-	memWriteResp <-chan axiprotocol.WriteResp) {
-
-	// Since we're not reading anything from memory, disable those reads
-	go axiprotocol.ReadDisable(memReadAddr, memReadData)
+	// Set up port for interacting with the shared memory
+	writeReq chan<- smi.Flit64,
+	writeResp <-chan smi.Flit64) {
 
 	// Multiply incoming data by 2 using Multiply function
 	val := Multiply(a)
 
 	// Write the result to the location in shared memory as requested by the host
-	aximemory.WriteUInt32(
-		memWriteAddr, memWriteData, memWriteResp, true, addr, uint32(val))
+	smi.WriteUInt32(
+		writeReq, writeResp, addr, smi.DefaultOptions, val)
 }

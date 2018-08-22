@@ -4,9 +4,8 @@ import (
 	//  Import the entire framework for interracting with SDAccel from Go (including bundled verilog)
 	_ "github.com/ReconfigureIO/sdaccel"
 
-	// Use the new AXI protocol package for interracting with memory
-	aximemory "github.com/ReconfigureIO/sdaccel/axi/memory"
-	axiprotocol "github.com/ReconfigureIO/sdaccel/axi/protocol"
+	// Use the SMI protocol package
+	"github.com/ReconfigureIO/sdaccel/smi"
 )
 
 // function to add two uint32s
@@ -25,21 +24,14 @@ func Top(
 	// YOUR CODE: declare the second operand here
 	// YOUR CODE: declare the memory address for the FPGA to store the result
 
-	// Set up channels for interacting with the shared memory
-	memReadAddr chan<- axiprotocol.Addr,
-	memReadData <-chan axiprotocol.ReadData,
-
-	memWriteAddr chan<- axiprotocol.Addr,
-	memWriteData chan<- axiprotocol.WriteData,
-	memWriteResp <-chan axiprotocol.WriteResp) {
-
-	// Since we're not reading anything from memory, disable those reads
-	go axiprotocol.ReadDisable(memReadAddr, memReadData)
+	// Set up port for writing to shared memory
+	writeReq chan<- smi.Flit64,
+	writeResp <-chan smi.Flit64)
 
 	// Add the two input integers together
 	// YOUR CODE: Perform the addition here using the Add function
 
 	// Write the result of the addition to the shared memory address provided by the host
-	aximemory.WriteUInt32(
-		memWriteAddr, memWriteData, memWriteResp, false, addr, val)
+	smi.WriteUInt32(
+		writeReq, writeResp, addr, smi.DefaultOptions, val)
 }

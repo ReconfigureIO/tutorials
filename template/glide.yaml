@@ -3,6 +3,5 @@ import:
 - package: github.com/ReconfigureIO/sdaccel
   version: ~0.17.1
   subpackages:
-  - axi/memory
-  - axi/protocol
-  - xcl
+    - smi
+    - xcl
