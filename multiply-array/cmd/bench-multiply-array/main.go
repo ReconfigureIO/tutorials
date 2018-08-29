@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+	// Use command line argument to supply the sample data size
 	input := os.Args[1]
 
 	nInputs, err := strconv.Atoi(input)
@@ -21,6 +22,7 @@ func main() {
 		os.Exit(2)
 	}
 
+	// Set everything up using a new 'state'
 	state := NewState(nInputs)
 	defer state.Release()
 
