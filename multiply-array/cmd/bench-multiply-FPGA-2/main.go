@@ -58,8 +58,8 @@ func main() {
 	defer world.Release()
 
 	// Create a function that the benchmarking machinery can call
-	f := func(B *testing.B) {
-		BenchmarkKernel(world, B)
+	f := func(b *testing.B) {
+		BenchmarkKernel(world, b)
 	}
 
 	// Benchmark it
