@@ -30,7 +30,7 @@ func main() {
 	// run the benchmark
 	log.Println()
 	log.Println()
-	log.Printf("Time taken to collect and process an array of %v integers: \n", nInputs)
+	log.Printf("Time taken to pass, process and collect an array of %v integers: \n", nInputs)
 	log.Println()
 
 	result := testing.Benchmark(state.Run)
@@ -107,6 +107,6 @@ func (s *State) feedFPGA() {
 	// Read the results into our output variable
 	binary.Read(s.outputBuff.Reader(), binary.LittleEndian, &s.output)
 
-	//log.Printf("Input: %v ", s.input)
-	//log.Printf("Output: %v ", s.output)
+	log.Printf("Input: %v ", s.input)
+	log.Printf("Output: %v ", s.output)
 }
