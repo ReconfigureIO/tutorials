@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"log"
 	"testing"
 
 	"github.com/ReconfigureIO/sdaccel/xcl"
@@ -61,6 +62,10 @@ func main() {
 	// Benchmark it
 	result := testing.Benchmark(f)
 
+	log.Println()
+	log.Println()
+	log.Printf("Benchmark: ")
+	log.Println()
 	// Print the benchmark result
 	fmt.Printf("%s\n", result.String())
 }

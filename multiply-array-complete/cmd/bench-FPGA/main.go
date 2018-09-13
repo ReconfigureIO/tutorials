@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"log"
 	"math/rand"
 	"testing"
 
@@ -65,6 +66,10 @@ func main() {
 	// Benchmark it
 	result := testing.Benchmark(f)
 
+	log.Println()
+	log.Println()
+	log.Printf("FPGA runtime benchmark: ")
+	log.Println()
 	// Print the result
 	fmt.Printf("%s\n", result.String())
 }
